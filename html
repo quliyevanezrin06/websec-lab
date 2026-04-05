@@ -1,0 +1,102 @@
+<body>
+
+
+  <div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <span>Səbət</span>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">Səbət boşdur</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Cəmi:</span>
+        <span id="cartTotal">0 AZN</span>
+      </div>
+      <button class="checkout-btn" onclick="sifarisVer()">Sifariş ver</button>
+    </div>
+  </div>
+
+
+  <!-- Kart Modal -->
+  <div class="modal-overlay" id="kartModal">
+    <div class="kart-modal">
+      <div class="kart-modal-header">
+        <span>Ödəniş məlumatları</span>
+        <button class="kart-modal-close" onclick="kartModalBag()">✕</button>
+      </div>
+      <div class="xulase-bolme">
+        <div id="xulaseMehsullar"></div>
+        <div class="xulase-total">
+          <span>Cəmi:</span>
+          <span id="xulaseCemi">0 AZN</span>
+        </div>
+      </div>
+      <div id="kartFormHisse">
+        <div class="kart-form">
+          <div>
+            <label>Ad Soyad</label>
+            <input type="text" id="kartAd" placeholder="Ad Soyad">
+          </div>
+          <div>
+            <label>Kart nömrəsi</label>
+            <input type="text" id="kartNo" placeholder="0000 0000 0000 0000" maxlength="19" oninput=
+          </div>
+          <div class="iki-sutun">
+            <div>
+              <label>Son istifadə</label>
+              <input type="text" id="kartTarix" placeholder="MM/YY" maxlength="5" oninput="tarixForm
+            </div>
+            <div>
+              <label>CVV</label>
+              <input type="password" id="kartCvv" placeholder="***" maxlength="3">
+            </div>
+          </div>
+          <button class="odenish-btn" onclick="odenisEt()">Ödəniş et</button>
+        </div>
+      </div>
+      <div class="ugur-ekran" id="ugurEkran">
+        <div class="check">✓</div>
+        <h3>Ödəniş tamamlandı!</h3>
+        <p id="ugurMetn"></p>
+      </div>
+    </div>
+  </div>
+
+
+  <header>
+    <div style="width:44px"></div>
+    <div class="header-center">
+      <h1>Mağaza</h1>
+      <nav>
+        <a onclick="showPage('home')" id="nav-home" class="active">Ana Səhifə</a>
+        <a onclick="showPage('products')" id="nav-products">Məhsullar</a>
+      </nav>
+    </div>
+    <div class="cart-icon-wrap" onclick="openCart()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" 
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
+  </header>
+
+
+  <div id="page-home">
+    <div class="home-text">
+      <h2>Xoş gəlmisiniz!</h2>
+      <p>Ən yaxşı qramofonlar və vinyl plaklar burada.</p>
+    </div>
+  </div>
+
+
+  <div id="page-products">
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
