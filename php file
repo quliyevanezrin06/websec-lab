@@ -1,0 +1,43 @@
+<?php
+header("Content-Type: application/json; charset=utf-8");
+$conn = new mysqli("localhost", "root", "", "magaza_db");
+$conn->set_charset("utf8");
+
+$data = json_decode(file_get_contents("php://input"), true);
+$mehsullar = $data['sebetMehsullar'] ?? [];
+$total = floatval($data['umumiMebleg'] ?? 0);
+
+try {
+    $conn->begin_transaction();
+
+    // 1. Sifariş
+    $stmt1 = $conn->prepare("INSERT INTO sifarisler (umumi_mebleg, status) VALUES (?, 'Tamamlandi')");
+    $stmt1->bind_param("d", $total);
+    $stmt1->execute();
+    $sifaris_id = $conn->insert_id;
+
+    // 2. Detallar
+    $stmt2 = $conn->prepare("INSERT INTO sifaris_detallari (sifaris_id, mehsul_adi, qiymet, say) VALUES (?, ?, ?, ?)");
+    foreach ($mehsullar as $item) {
+        $m_ad = $item['ad'];
+        $m_qiymet = floatval($item['qiymet']);
+        $m_say = intval($item['say'] ?? 1); // Burada default 1 qoyduq
+        
+        $stmt2->bind_param("isdi", $sifaris_id, $m_ad, $m_qiymet, $m_say);
+        $stmt2->execute();
+    }
+
+    // 3. Ödəniş
+    $stmt3 = $conn->prepare("INSERT INTO odenis_melumatlari (sifaris_id, kart_sahibi, kart_nomresi, son_istifade, odenis_mebleg) VALUES (?, ?, ?, ?, ?)");
+    $stmt3->bind_param("isssd", $sifaris_id, $data['kart_ad'], $data['kart_nomre'], $data['kart_tarix'], $total);
+    $stmt3->execute();
+
+    $conn->commit();
+    echo json_encode(["success" => true]);
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo json_encode(["success" => false, "mesaj" => "Xeta: " . $e->getMessage()]);
+}
+$conn->close();
+?>
