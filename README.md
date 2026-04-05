@@ -46,4 +46,4 @@ Zəifliyi aradan qaldırmaq üçün aşağıdakı təhlükəsizlik standartları
 3. **Daxiletmə Validasiyası**: Xüsusi simvollar (`'`, `;`, `--`) server tərəfində mütləq təmizlənməlidir.
 
 ---
-**Hesabatı hazırladı**: Gemini (TechStore Vulnerability Lab)
+**Hesabatı hazırladı**: Quliyeva Nezrin
